@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>springboot</groupId>
+    <artifactId>springboot-mybatis</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <name>springboot-mybatis :: 整合 Mybatis Demo</name>
+
+    <!-- Spring Boot 启动父依赖 之前1.5.4.RELEASE -->
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>1.5.4.RELEASE</version>
+    </parent>
+
+    <properties>
+        <mybatis-spring-boot>1.2.0</mybatis-spring-boot>
+        <mysql-connector>5.1.39</mysql-connector>
+        <java.version>1.8</java.version>
+    </properties>
+
+    <dependencies>
+    	<!-- Spring Boot jdbc -->
+    	<dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-jdbc</artifactId>
+        </dependency>
+
+        <!-- Spring Boot Web 依赖 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+		 <dependency><!-- spring boot aop starter依赖 -->  
+            <groupId>org.springframework.boot</groupId>  
+            <artifactId>spring-boot-starter-aop</artifactId>  
+        </dependency> 
+        <!-- Spring Boot Test 依赖 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <!-- Spring Boot 热部署配置 -->
+        <dependency>
+        	<groupId>org.springframework.boot</groupId>
+        	<artifactId>spring-boot-devtools</artifactId>
+        	<optional>true</optional>
+    	</dependency>
+        <!-- Spring Boot cache 依赖 -->
+        <dependency>
+    		<groupId>org.springframework.boot</groupId>
+    		<artifactId>spring-boot-starter-cache</artifactId>
+		</dependency>
+		<!-- Spring Boot amqp 依赖 -->
+		<dependency>
+    		<groupId>org.springframework.boot</groupId>
+    		<artifactId>spring-boot-starter-amqp</artifactId>
+		</dependency>
+		<!-- Spring boot elasticsearch 依赖 -->
+		<!--<dependency>
+    		<groupId>org.springframework.boot</groupId>
+    		<artifactId>spring-boot-starter-data-elasticsearch</artifactId>
+		</dependency>-->
+		<!-- 操作elasticsearch 的jest 依赖 -->
+		<dependency>
+    		<groupId>io.searchbox</groupId>
+    		<artifactId>jest</artifactId>
+    		<version>5.3.3</version>
+		</dependency>
+		<!-- spring-boot-starter-mail 依赖 -->
+		<dependency>
+    		<groupId>org.springframework.boot</groupId>
+    		<artifactId>spring-boot-starter-mail</artifactId>
+		</dependency>
+		<!-- Spring Boot  dubbo  依赖 -->
+		<dependency>
+    		<groupId>com.alibaba.boot</groupId>
+    		<artifactId>dubbo-spring-boot-starter</artifactId>
+    		<version>0.1.0</version>
+		</dependency>
+		<!-- 引入 zookeeper的客户端工具  进行注册服务 -->
+		<dependency>
+    		<groupId>com.github.sgroschupf</groupId>
+    		<artifactId>zkclient</artifactId>
+    		<version>0.1</version>
+		</dependency>
+		
+		
+		<!-- session共享 使用缓存redis -->
+		<dependency>
+    		<groupId>org.springframework.session</groupId>
+    		<artifactId>spring-session-data-redis</artifactId>
+		</dependency>
+        <!-- Spring Boot Mybatis-puls 可以取代下面的SBM -->
+  		<dependency>
+    		<groupId>com.baomidou</groupId>
+    		<artifactId>mybatis-plus</artifactId>
+    		<version>2.3</version>
+		</dependency>
+		<dependency>
+    		<groupId>com.baomidou</groupId>
+    		<artifactId>mybatisplus-spring-boot-starter</artifactId>
+    		<version>1.0.5</version>
+		</dependency>
+		<!-- 模板引擎 配合上面mybaits-puls的代码生成器 -->
+		<dependency>
+    		<groupId>org.apache.velocity</groupId>
+    		<artifactId>velocity-engine-core</artifactId>
+    		<version>2.0</version>
+		</dependency>
+
+		<!-- 模板引擎 配合上面mybaits-puls的代码生成器，需要指定 mpg.setTemplateEngine(new FreemarkerTemplateEngine()); -->
+		<dependency>
+    		<groupId>org.freemarker</groupId>
+    		<artifactId>freemarker</artifactId>
+    		<version>2.3.28</version>
+		</dependency>
+		 <!-- Spring Boot Mybatis  -->
+        <dependency>
+            <groupId>org.mybatis.spring.boot</groupId>
+            <artifactId>mybatis-spring-boot-starter</artifactId>
+            <version>${mybatis-spring-boot}</version>
+        </dependency>
+
+        <!-- MySQL 连接驱动依赖 -->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>${mysql-connector}</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.apache.httpcomponents/httpclient -->
+		<dependency>
+    		<groupId>org.apache.httpcomponents</groupId>
+    		<artifactId>httpclient</artifactId>
+    		<version>4.5.3</version>
+		</dependency>
+
+
+        <!-- Junit -->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.12</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-devtools</artifactId>
+            <optional>true</optional>
+        </dependency>
+
+		<!-- https://mvnrepository.com/artifact/org.apache.commons/commons-lang3 -->
+		<dependency>
+    		<groupId>org.apache.commons</groupId>
+    		<artifactId>commons-lang3</artifactId>
+    		<version>3.4</version>
+		</dependency>
+
+        <dependency>
+            <groupId>org.springframework.data</groupId>
+            <artifactId>spring-data-redis</artifactId>
+            <version>1.7.11.RELEASE</version>
+        </dependency>
+        <dependency>
+            <groupId>redis.clients</groupId>
+            <artifactId>jedis</artifactId>
+            <version>2.8.2</version>
+        </dependency>
+        
+        <!--json格式 https://mvnrepository.com/artifact/com.alibaba/fastjson -->
+		<dependency>
+    		<groupId>com.alibaba</groupId>
+    		<artifactId>fastjson</artifactId>
+    	<version>1.2.47</version>
+		</dependency>
+		 
+		
+		
+        
+    </dependencies>
+  	<build>
+    <plugins>
+        <plugin>
+        	<!-- 配合 springboot热部署 -->
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-maven-plugin</artifactId>
+            <configuration>
+                <fork>true</fork>
+            </configuration>
+        </plugin>
+	</plugins>
+	</build>
+    
+    
+	<!-- 如果mapper.xml是放在src/main/java目录下，需配置以下
+<build>
+  <resources>
+      <resource>
+          <directory>src/main/java</directory>
+          <filtering>false</filtering>
+          <includes>
+              <include>**/mapper/*.xml</include>
+          </includes>
+      </resource>
+  </resources>
+</build>-->
+
+</project>

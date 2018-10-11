@@ -4,11 +4,13 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import org.junit.Test;
+import org.spring.springboot.domain.Weather;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.client.RestTemplate;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.TypeReference;
 import com.sun.xml.internal.stream.Entity;
 
 public class RestTemplateTest extends SpringTestCase {
@@ -38,6 +40,7 @@ public class RestTemplateTest extends SpringTestCase {
 		String result=restTemplate.getForObject("https://www.sojson.com/open/api/lunar/json.shtml", String.class, map);
 		System.out.println(result.toString());
 		JSONObject jsonObject =JSON.parseObject(result);
+//		Weather weather = JSON.parseObject(result,new TypeReference<Weather>() {});
 		Iterator<Entry<String, Object>> iterator = jsonObject.entrySet().iterator();
 		while(iterator.hasNext()) {
 			Entry<String, Object> next = iterator.next();

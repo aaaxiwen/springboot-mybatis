@@ -1,5 +1,6 @@
 package org.spring.springboot.controller;
 
+import java.io.File;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
@@ -19,4 +20,7 @@ public class SessionController {
 		request.getSession().setAttribute("uid", uid);
 		return request.getSession().getId();
 	}
+	
+	
+	
 }

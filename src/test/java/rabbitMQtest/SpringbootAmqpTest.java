@@ -36,7 +36,7 @@ public class SpringbootAmqpTest{
 		Map<String, Object> map = new HashMap<>();
 		map.put("msg", "萧喜文的信息");
 		map.put("data", Arrays.asList("长得帅",132,true));
-		rabbitTemplate.convertAndSend("xxw.exchange.topic", "sdfsdf.news", map);
+		rabbitTemplate.convertAndSend("xxw.exchange.topic", "dfdfd.news", map);
 	}
 	@Test
 	public void receive() {

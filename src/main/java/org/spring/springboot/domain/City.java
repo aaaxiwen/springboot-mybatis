@@ -14,7 +14,7 @@ public class City implements Comparator<City> {
     /**
      * 城市编号
      */
-	@JestId
+	@JestId  //el需要的注释
     private Long id;
 
     /**

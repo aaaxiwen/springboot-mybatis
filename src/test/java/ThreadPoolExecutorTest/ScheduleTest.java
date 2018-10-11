@@ -12,8 +12,8 @@ public class ScheduleTest {
 		
 		for(int i=0;i<15;i++) {
 			MyTask myTask = new MyTask(i);
-			scheduledExecutorService.schedule(myTask, 10, TimeUnit.SECONDS);
-			System.out.println("研究延迟跑线程");
+			scheduledExecutorService.schedule(myTask, 10, TimeUnit.SECONDS);//任务虽然是10秒后开始跑，但是一开始就创建了子线程去等待任务启动，此处ScheduledExecutorService默认最多创建4个子线程去跑任务，
+			System.out.println("研究延迟跑线程");							//猜测任务会到缓冲队列计时而不是到子线程那才可以计时
 		}
 		scheduledExecutorService.shutdown();
 	}

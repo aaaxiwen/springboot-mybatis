@@ -220,13 +220,13 @@
             <optional>true</optional>
         </dependency>
 
-		<!-- https://mvnrepository.com/artifact/org.apache.commons/commons-lang3 -->
+		<!-- lang3 stringutil那些工具  微信支付也用到了 https://mvnrepository.com/artifact/org.apache.commons/commons-lang3 -->
 		<dependency>
     		<groupId>org.apache.commons</groupId>
     		<artifactId>commons-lang3</artifactId>
     		<version>3.4</version>
 		</dependency>
-
+		<!-- redis -->
         <dependency>
             <groupId>org.springframework.data</groupId>
             <artifactId>spring-data-redis</artifactId>
@@ -244,9 +244,48 @@
     		<artifactId>fastjson</artifactId>
     	<version>1.2.47</version>
 		</dependency>
-		 
+		<!--hadoop 相关依赖  -->
+		<dependency>
+      		<groupId>org.apache.hadoop</groupId>
+      		<artifactId>hadoop-client</artifactId>
+      		<version>2.7.3</version>
+    	</dependency>
+		<dependency>
+      		<groupId>org.apache.hadoop</groupId>
+      		<artifactId>hadoop-common</artifactId>
+      		<version>2.7.3</version>
+    	</dependency>
+    	<dependency>
+      	 	 <groupId>org.apache.hadoop</groupId>
+      	 	 <artifactId>hadoop-hdfs</artifactId>
+      		 <version>2.7.3</version>
+   		</dependency>
+   		<!--hadoop 相关依赖报错解决  -->
+		<dependency>
+            <groupId>jdk.tools</groupId>
+            <artifactId>jdk.tools</artifactId>
+            <version>1.8</version>
+            <scope>system</scope>
+            <systemPath>${JAVA_HOME}/lib/tools.jar</systemPath>
+        </dependency>
+        <!--运用redis实现分布式锁（官方推荐）   -->
+       <!-- <dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-redis</artifactId>
+		</dependency>-->
+        <dependency>
+			<groupId>org.redisson</groupId>
+			<artifactId>redisson</artifactId>
+			<version>3.5.0</version>
+		</dependency>
+		<!--猜测ES5 和hadoop2.7 都是使用netty3.x的  现在redisson3.5使用 netty4.x 解决包的冲突  -->
+		<dependency>
+            <groupId>io.netty</groupId>
+            <artifactId>netty-all</artifactId>
+            <version>4.1.13.Final</version>
+        </dependency>
 		
-		
+        
         
     </dependencies>
   	<build>

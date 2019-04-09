@@ -55,11 +55,12 @@ public class CommonUtil {
         }
     });
 
+    //对象转xml
     public static String payInfoToXML(PayInfo pi) {
         xstream.alias("xml", pi.getClass());
         return xstream.toXML(pi);
     }
-
+    //文本操作 document  Element 节点 
     @SuppressWarnings("unchecked")
     public static Map<String, String> parseXml(String xml) throws Exception {
         Map<String, String> map = new HashMap<String, String>();

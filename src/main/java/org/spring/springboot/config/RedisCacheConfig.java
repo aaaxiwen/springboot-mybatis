@@ -74,5 +74,7 @@ public class RedisCacheConfig {
 		cacheManager.setUsePrefix(true);
 		return cacheManager;
 	}
+	
+	
 
 }

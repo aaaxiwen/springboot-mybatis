@@ -15,7 +15,7 @@ public class GenforxcxTest {
     public void generateCode() {
         String packageName = "changxiao.hejiahuan.xcx";
         boolean serviceNameStartWithI = false;//user -> UserService, 设置成true: user -> IUserService
-        generateByTables(serviceNameStartWithI, packageName, "hjh_lottery");//表名
+        generateByTables(serviceNameStartWithI, packageName, "hjh_news","hjh_paragraph");//表名
     }
 
     private void generateByTables(boolean serviceNameStartWithI, String packageName, String... tableNames) {
@@ -48,7 +48,7 @@ public class GenforxcxTest {
                 .setSuperServiceImplClass("changxiao.hejiahuan.common.service.impl.BaseService");
         config.setActiveRecord(false)
                 .setAuthor("萧喜文")
-                .setOutputDir("d:\\codeGen\\xcx-6V")
+                .setOutputDir("d:\\codeGen\\xcx-18V")
                 .setFileOverride(true)
                 .setActiveRecord(false)//不需要ActiveRecord特性的请改为false
                 .setEnableCache(false)//xml 二级缓存

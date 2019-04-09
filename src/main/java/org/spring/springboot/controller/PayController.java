@@ -15,9 +15,13 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -25,10 +29,10 @@ import javax.servlet.http.HttpServletRequest;
 public class PayController {//微信小程序的支付 1.PayController 2.PayInfo实体3.util 4.依赖
 
     private static Logger log = Logger.getLogger(PayController.class);
-
+    //, produces = "text/html;charset=UTF-8"
     @ResponseBody
-    @RequestMapping(value = "/prepay", produces = "text/html;charset=UTF-8")
-    public String prePay(String code, ModelMap model, HttpServletRequest request) {
+    @RequestMapping(value = "/prepay")
+    public Map<String, String> prePay(String code, ModelMap model, HttpServletRequest request) throws Exception {
 
         String content = null;
         Map map = new HashMap();
@@ -52,6 +56,7 @@ public class PayController {//微信小程序的支付 1.PayController 2.PayInfo
             log.error("openId: " + openId + ", clientIP: " + clientIP);
 
             String randomNonceStr = RandomUtils.generateMixString(32);
+            //统一下单
             String prepayId = unifiedOrder(openId, clientIP, randomNonceStr);
 
             log.error("prepayId: " + prepayId);
@@ -60,20 +65,28 @@ public class PayController {//微信小程序的支付 1.PayController 2.PayInfo
                 result = false;
                 info = "出错了，未获取到prepayId";
             } else {
-                map.put("prepayId", prepayId);
+            	//
+            	String newpackage = "prepay_id="+prepayId;
+                map.put("package", newpackage);//相当于package
+                map.put("appId",Constant.APP_ID);
                 map.put("nonceStr", randomNonceStr);
+                map.put("timeStamp", String.valueOf(System.currentTimeMillis()));
+                map.put("signType","MD5");
+                String paySign = createSignByASCII(map);
+                log.error("再次签名paySign"+paySign);
+                map.put("paySign", paySign);
             }
         }
 
         try {
-            map.put("result", result);
+            map.put("result", String.valueOf(result));
             map.put("info", info);
-            content = mapper.writeValueAsString(map);
+           
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        return content;
+        return map;
     }
 
 
@@ -124,7 +137,7 @@ public class PayController {//微信小程序的支付 1.PayController 2.PayInfo
             log.error("md5 value: " + md5);
 
             String xml = CommonUtil.payInfoToXML(payInfo);
-            xml = xml.replace("__", "_").replace("<![CDATA[1]]>", "1");
+            xml = xml.replace("__", "_");//.replace("<![CDATA[1]]>", "1")
             //xml = xml.replace("__", "_").replace("<![CDATA[", "").replace("]]>", "");
             log.error(xml);
 
@@ -173,7 +186,7 @@ public class PayController {//微信小程序的支付 1.PayController 2.PayInfo
         payInfo.setBody("JSAPI支付测试");//商品描述
         payInfo.setAttach("支付测试4luluteam");//附加信息 非必要
         payInfo.setOut_trade_no(randomOrderId);//商户系统内部订单号
-        payInfo.setTotal_fee(1);//订单总额
+        payInfo.setTotal_fee(2);//订单总额
         payInfo.setSpbill_create_ip(clientIP);//后台ip
         payInfo.setTime_start(timeStart);//统一订单下单时间
         payInfo.setTime_expire(timeExpire);//统一订单失效时间
@@ -210,7 +223,20 @@ public class PayController {//微信小程序的支付 1.PayController 2.PayInfo
         return CommonUtil.getMD5(sb.toString().trim()).toUpperCase();
     }
 
-
+    private String createSignByASCII(Map<String, String> param) throws Exception {
+    	//签名步骤一：按字典排序参数
+    	List<String> list = new ArrayList<>(param.keySet());
+    	list = list.stream().sorted().collect(Collectors.toList());
+    	String str = "";
+    	for(int i = 0;i < list.size();i++) {
+    		str += list.get(i) + "=" + param.get(list.get(i))+"&";
+    	}
+    	//签名步骤二：加上key
+    	str += "key=" + Constant.APP_KEY;
+    	//步骤三:加密并大写
+    	str = CommonUtil.getMD5(str).toUpperCase();
+    	return str;
+    }
 
 }
 

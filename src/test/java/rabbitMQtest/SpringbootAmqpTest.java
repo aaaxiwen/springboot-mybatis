@@ -7,6 +7,7 @@ import java.util.Map;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.spring.springboot.Application;
+import org.spring.springboot.domain.Wechatuser;
 import org.springframework.amqp.core.AmqpAdmin;
 import org.springframework.amqp.core.Binding;
 import org.springframework.amqp.core.Queue;
@@ -15,6 +16,8 @@ import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
+
+import com.alibaba.fastjson.JSON;
 
 import ch.qos.logback.core.net.SyslogOutputStream;
 
@@ -48,7 +51,16 @@ public class SpringbootAmqpTest{
 	public void createExchange() {
 		//RabbitMQ 对于已创建的不会再创建了
 		amqpAdmin.declareExchange(new TopicExchange("admin.exchange.topic"));
-		amqpAdmin.declareQueue(new Queue("admin.queue", true));
+		amqpAdmin.declareQueue(new Queue("admin.queue", true));//true 定义这个队里是持久存活的，false定义这个队列是重启后不存在
 		amqpAdmin.declareBinding(new Binding("admin.queue", Binding.DestinationType.QUEUE, "admin.exchange.topic", "admin.#", null));
 	}
+	@Test
+	public void contextLoadsForIm() {
+		Wechatuser wechatuser = new Wechatuser();
+		wechatuser.setId(1l);
+		wechatuser.setNikename("sdf");
+		String string = String.valueOf(wechatuser.getId())+","+wechatuser.getNikename()+","+wechatuser.getAvatarurl();
+		rabbitTemplate.convertAndSend("im.exchange.topic", "im.wechatuser",string);
+	}
+	
 }

@@ -6,6 +6,8 @@ import java.util.Map.Entry;
 import org.junit.Test;
 import org.spring.springboot.domain.Weather;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.support.atomic.RedisAtomicLong;
 import org.springframework.web.client.RestTemplate;
 
 import com.alibaba.fastjson.JSON;
@@ -16,6 +18,8 @@ import com.sun.xml.internal.stream.Entity;
 public class RestTemplateTest extends SpringTestCase {
 	@Autowired
 	RestTemplate restTemplate;
+	@Autowired
+	RedisTemplate redisTemplate;
 	
 	@Test
 	public void test() {
@@ -47,4 +51,14 @@ public class RestTemplateTest extends SpringTestCase {
 			System.out.println(next.toString());
 		}
 	}
+	
+	@Test
+    public void test02() {
+    	RedisAtomicLong redisAtomicLong = new RedisAtomicLong("somekey", redisTemplate.getConnectionFactory());
+    	System.out.println(redisAtomicLong.getExpire());
+    	long incrementAndGet = redisAtomicLong.incrementAndGet();
+    	System.out.println(incrementAndGet);
+    	
+    	
+    }
 }

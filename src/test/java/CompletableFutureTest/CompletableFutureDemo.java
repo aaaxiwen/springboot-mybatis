@@ -36,7 +36,7 @@ public class CompletableFutureDemo {
         
         CompletableFuture<Integer> supplyAsync = CompletableFuture.supplyAsync(() ->calc(1), executorService);//supplyAsync 参数是funtion函数 并CompletableFuture 有返回值
         CompletableFuture<Void> runAsync = CompletableFuture.runAsync(new MyTask(1), executorService);//runAsync  参数是实现runable接口的 并CompletableFuture 无返回值
-        //supplyAsync  我new一个thread 参数是runable 效果是没有跑run  我也不知为什么??? 加了start 就。。。
+        //supplyAsync  我new一个thread 参数是runable 效果是没有跑run  我也不知为什么??? 加了start 就。。。突然知道了  start（）是函数方法
         //CompletableFuture.supplyAsync(() ->new Thread(new MyTask(1)).start(), executorService);
         supplyAsync.get();
         runAsync.get();
